@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkinson's Disease Prediction</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, black, orange);
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .prediction-container {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0px 0px 20px rgba(255, 165, 0, 0.6);
+            width: 90%;
+            max-width: 600px;
+            display: grid;
+            grid-template-rows: auto auto;
+            grid-gap: 15px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 images per row */
+            gap: 15px;
+        }
+
+        .prediction-image {
+            width: 100%; /* Ensures all images take equal width */
+            height: 150px; /* Set fixed height */
+            object-fit: cover; /* Maintain aspect ratio and crop if needed */
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(72, 80, 224, 0.76);
+        }
+
+        .upload-section {
+            margin-top: 15px;
+        }
+
+        .upload-section input {
+            background: white;
+            color: black;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .btn {
+            background: orange;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: darkorange;
+        }
+
+        .warning {
+            margin-top: 15px;
+            color: yellow;
+        }
+
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="prediction-container">
+    <h2>AI-Based Parkinson's Disease Prediction</h2>
+    
+    <!-- Image Grid Section -->
+    <div class="image-grid">
+        <img src="C:\Users\dheng\OneDrive\Desktop\My_New_Flask_app\templates\Ai brain.jpg" alt="AI Analysis 1" class="prediction-image">
+        <img src="C:\Users\dheng\OneDrive\Desktop\My_New_Flask_app\templates\park2.jpeg" alt="AI Analysis 2" class="prediction-image">
+        <img src="C:\Users\dheng\OneDrive\Desktop\My_New_Flask_app\templates\park3.jpg" alt="AI Analysis 3" class="prediction-image">
+        <img src="C:\Users\dheng\OneDrive\Desktop\My_New_Flask_app\templates\park4.jpeg" alt="AI Analysis 4" class="prediction-image">
+    </div>
+
+    <!-- Form to send voice note -->
+    <form id="predictForm" enctype="multipart/form-data">
+        <div class="upload-section">
+            <label for="voiceUpload">Upload Voice Note:</label>
+            <input type="file" id="voiceUpload" name="file" accept="audio/*" required>
+        </div>
+        <button type="submit" class="btn">Predict</button>
+    </form>
+
+    <p class="warning">⚠ This AI model is not 100% accurate. Please consult a doctor for confirmation.</p>
+
+    <!-- Prediction result will be shown here -->
+    <p id="result"></p>
+</div>
+
+<script>
+    document.getElementById("predictForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let formData = new FormData();
+        let fileInput = document.getElementById("voiceUpload").files[0];
+
+        if (!fileInput) {
+            alert("Please upload a voice note!");
+            return;
+        }
+
+        formData.append("file", fileInput);
+
+        fetch("http://127.0.0.1:5000/predict", {  // Ensure Flask is running on this port
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            let resultText = data.prediction === 1 
+                ? "⚠ Parkinson's Detected" 
+                : "✅ No Parkinson's Detected";
+            document.getElementById("result").innerText = "Prediction: " + resultText;
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            document.getElementById("result").innerText = "Error in prediction.";
+        });
+    });
+</script>
+
+</body>
+</html>
