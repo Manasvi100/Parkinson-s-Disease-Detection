@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkinson’s Disease Information</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; color: #333;">
+
+    <header style="background:#0090c5;; color: white; padding: 20px; text-align: center;">
+        <h1 style="margin: 0;"> Understanding Parkinson’s Disease</h1>
+        <nav>
+            <ul style="list-style: none; padding: 0; display: flex; justify-content: center;">
+                <li style="margin: 0 15px;"><a href="#early-signs" style="color: #f39c12; text-decoration: none; font-weight: bold;">Early Signs</a></li>
+                <li style="margin: 0 15px;"><a href="#causes" style="color: #f39c12; text-decoration: none; font-weight: bold;">Causes</a></li>
+                <li style="margin: 0 15px;"><a href="#risk-factors" style="color: #f39c12; text-decoration: none; font-weight: bold;">Risk Factors</a></li>
+                <li style="margin: 0 15px;"><a href="#prevention" style="color: #f39c12; text-decoration: none; font-weight: bold;">Prevention</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main style="max-width: 800px; margin: auto; padding: 20px; background: white; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); border-radius: 10px;">
+
+        <section id="early-signs" style="padding: 20px;">
+            <h2 style="color: #2980b9; border-bottom: 3px solid #3498db; padding-bottom: 10px;"> Early Signs of Parkinson’s</h2>
+            <img src="{{ url_for('static', filename='images/earlysign.jpg') }}" alt="Brain Scan for Parkinson's" style="max-width: 100%; height: auto; display: block; margin: auto;">
+            <p style="font-size: 16px; line-height: 1.6;">
+                The symptoms of Parkinson’s disease develop gradually. They often start with a slight tremor in one hand and a feeling of stiffness in the body. Over time, other symptoms develop, and some people can experience dementia.
+            </p>
+            
+            <h3 style="color: #e74c3c;"> Common Early Symptoms:</h3>
+            <ul style="line-height: 1.8;">
+                <li> Tremors and shaking in hands</li>
+                <li> Balance and coordination issues</li>
+                <li> Loss of sense of smell</li>
+                <li> Gait changes (shuffling or leaning forward)</li>
+                <li> Fixed facial expressions</li>
+                <li> Softer or trembling voice</li>
+                <li> Smaller and cramped handwriting</li>
+                <li> Sleep disturbances (restless legs, REM sleep disorder)</li>
+            </ul>
+
+            <h3 style="color: #e67e22;"> Other Symptoms:</h3>
+            <ul style="line-height: 1.8;">
+                <li> Mood changes (depression, anxiety)</li>
+                <li> Difficulty chewing and swallowing</li>
+                <li> Fatigue and low energy</li>
+                <li> Constipation</li>
+                <li> Cognitive decline (dementia, hallucinations)</li>
+            </ul>
+            
+            <p style="color: #7f8c8d; font-size: 14px;">
+                ⚠️ Note: Having these symptoms does not necessarily mean a person has Parkinson’s. Other conditions such as Parkinsonism, strokes, and head trauma can have similar effects.
+            </p>
+        </section>
+
+        <section id="causes" style="padding: 20px;">
+            <h2 style="color: #27ae60; border-bottom: 3px solid #2ecc71; padding-bottom: 10px;"> Causes</h2>
+            
+            <p>Scientists believe Parkinson’s results from a combination of genetic and environmental factors. While the exact cause is still unknown, several key factors contribute to its development.</p>
+        
+            <h3 style="color: #e67e22;"> What Can Trigger Parkinson’s Disease?</h3>
+            <p>Parkinson’s disease is a neurological disorder that develops due to changes in the brain. While the precise triggers are unclear, scientists have identified several variations that occur.</p>
+        
+            <h3 style="color: #3498db;"> Low Dopamine Levels</h3>
+            <p>Parkinson’s symptoms mainly result from falling levels of dopamine, a neurotransmitter responsible for movement control. When dopamine-producing cells die in the brain, it becomes harder to control movement. As dopamine levels continue to fall, symptoms progressively worsen.</p>
+        
+            <h3 style="color: #9b59b6;"> Low Norepinephrine Levels</h3>
+            <p>Another neurotransmitter, norepinephrine, is also affected in Parkinson’s disease. Damage to nerve endings producing norepinephrine can lead to symptoms such as:</p>
+            <ul style="line-height: 1.8;">
+                <li> Stiffness and rigidity</li>
+                <li> Postural instability</li>
+                <li> Tremors</li>
+                <li> Anxiety</li>
+                <li> Difficulty focusing</li>
+                <li> Dementia</li>
+                <li> Depression</li>
+            </ul>
+            <p>This may also explain why individuals with Parkinson’s often experience **orthostatic hypotension**, a condition causing dizziness upon standing.</p>
+        
+            <h3 style="color: #c0392b;"> Lewy Bodies</h3>
+            <p>Clumps of protein called **alpha-synuclein** (Lewy bodies) accumulate in the brains of people with Parkinson’s disease. These deposits contribute to nerve cell loss, affecting movement, thinking, mood, and behavior. In some cases, Lewy body accumulation can lead to **dementia**.</p>
+        
+            <h3 style="color: #16a085;"> Genetic Factors</h3>
+            <p>Scientists have identified genetic mutations linked to Parkinson’s, but the disease is not typically inherited. Only about **10% of cases** are linked to genetic causes, primarily in early-onset Parkinson’s.</p>
+        
+            <h3 style="color: #f39c12;"> Autoimmune Factors</h3>
+            <p>Research suggests a possible connection between Parkinson’s disease and **autoimmune disorders** like rheumatoid arthritis. A 2018 study found that individuals with autoimmune rheumatic diseases had a **1.37-times higher risk** of developing Parkinson’s.</p>
+        </section>
+        
+
+        <section id="risk-factors" style="padding: 20px;">
+            <h2 style="color: #c0392b; border-bottom: 3px solid #e74c3c; padding-bottom: 10px;"> Risk Factors</h2>
+            
+            <p>Several environmental factors may increase the risk of developing Parkinson’s disease. While the exact cause remains unclear, research has identified key risk factors.</p>
+        
+            <h3 style="color: #e67e22;"> Common Risk Factors</h3>
+            <ul style="line-height: 1.8;">
+                <li> <strong>Past Traumatic Brain Injury:</strong> Head injuries from contact sports or accidents may increase the risk of developing Parkinson’s.</li>
+                <li> <strong>Toxin Exposure:</strong> Pesticides, solvents, heavy metals, and other pollutants have been linked to increased risk.</li>
+                <li> <strong>Gender:</strong> Males are <strong>50% more likely</strong> to develop Parkinson’s than females. However, a 2016 study suggests the risk for females may increase with age.</li>
+                <li> <strong>Age:</strong> The condition typically appears after the age of <strong>60</strong>, but <strong>5–10%</strong> of cases occur before age 50 (early-onset Parkinson’s).</li>
+                <li> <strong>Certain Drugs and Medications:</strong> Some medicines can cause <em>Parkinsonism</em>, which mimics Parkinson’s symptoms but is not the disease itself.</li>
+            </ul>
+        
+            <h3 style="color: #9b59b6;"> Do Racial Factors Affect Risk?</h3>
+            <p>Past studies suggested that Black individuals in the U.S. were less likely to develop Parkinson’s. However, experts now believe this may be due to:</p>
+            <ul style="line-height: 1.8;">
+                <li> <strong>Underdiagnosis:</strong> Lack of awareness about Parkinson’s symptoms in Black individuals.</li>
+                <li> <strong>Healthcare Inequities:</strong> Barriers to early detection and treatment may lead to misdiagnosis.</li>
+            </ul>
+        </section>
+        
+
+        <section id="prevention" style="padding: 20px;">
+            <h2 style="color: #8e44ad; border-bottom: 3px solid #9b59b6; padding-bottom: 10px;"> Prevention</h2>
+            
+            <p>While it is not possible to completely prevent Parkinson’s disease, certain lifelong habits may help reduce the risk.</p>
+        
+            <h3 style="color: #27ae60;"> Avoiding Toxins</h3>
+            <p>People should take precautions when using potentially toxic chemicals such as herbicides, pesticides, and solvents. Steps to minimize exposure include:</p>
+            <ul style="line-height: 1.8;">
+                <li> Avoiding unnecessary use of pesticides and herbicides.</li>
+                <li> Using safer alternatives to products containing known toxins, such as paraquat-free options.</li>
+                <li> Taking precautions like wearing protective clothing when handling toxic chemicals.</li>
+            </ul>
+        
+            <h3 style="color: #e67e22;"> Avoiding Head Trauma</h3>
+            <p>Traumatic brain injuries may increase the risk of Parkinson’s. To protect against head trauma:</p>
+            <ul style="line-height: 1.8;">
+                <li> Wear protective headgear during contact sports.</li>
+                <li> Always use a helmet when cycling or motorcycling.</li>
+                <li> Wear a seatbelt when traveling by car.</li>
+                <li> Seek medical attention for concussions and avoid further risks until a doctor confirms it is safe.</li>
+            </ul>
+        
+            <h3 style="color: #3498db;"> Exercise</h3>
+            <p>According to a 2018 review, regular physical activity may help prevent or slow the progression of Parkinson’s disease by maintaining dopamine levels in the brain.</p>
+        
+            <h3 style="color: #f1c40f;"> Dietary Factors</h3>
+            <p>Some dietary choices may help reduce the risk of Parkinson’s and other diseases. Research suggests the following foods may be beneficial:</p>
+            <ul style="line-height: 1.8;">
+                <li> <strong>Turmeric:</strong> A mild spice used in curries, soups, teas, and other foods. It contains curcumin, an antioxidant that may help prevent oxidative stress and the clumping of alpha-synuclein protein, which is linked to Parkinson’s.</li>
+                <li> <strong>Flavonoids:</strong> These antioxidants may lower the risk of developing Parkinson’s disease. They are found in berries, apples, some vegetables, tea, and red grapes.</li>
+                <li> <strong>Avoiding Aldehydes:</strong> Heating and reusing some cooking oils, such as sunflower oil, may cause the formation of aldehydes, which are toxic chemicals linked to Parkinson’s and other diseases. A 2020 study suggests that potatoes fried in previously used cooking oils could have high aldehyde levels.</li>
+            </ul>
+        
+            <p style="color: #7f8c8d; font-size: 14px;">
+                 While these habits may help lower risk, they do not guarantee prevention. Consult a doctor for personalized guidance.
+            </p>
+        </section>
+        
+        
+        
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE HTML> 
+<html>
+<head>
+    <script>
+        function toggleChat() {
+            var chatBox = document.getElementById("chat-box");
+            if (chatBox.style.display === "none" || chatBox.style.display === "") {
+                chatBox.style.display = "block";
+            } else {
+                chatBox.style.display = "none";
+            }
+        }
+
+        function sendMessage() {
+            var userInput = document.getElementById("user-input").value;
+            if (userInput.trim() === "") return;
+
+            var chatMessages = document.getElementById("chat-messages");
+            var userMessage = document.createElement("div");
+            userMessage.className = "message user";
+            userMessage.innerText = userInput;
+            chatMessages.appendChild(userMessage);
+
+            document.getElementById("user-input").value = "";
+
+            fetch("/ask", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ question: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var botMessage = document.createElement("div");
+                botMessage.className = "message bot";
+                botMessage.innerText = data.answer;
+                chatMessages.appendChild(botMessage);
+            });
+        }
+    </script>
+    <style>
+        #chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        #chat-box {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            border: 1px solid #ccc;
+            display: none;
+            padding: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #chat-messages {
+            max-height: 200px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .message {
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .user {
+            background: #007bff;
+            color: white;
+            text-align: right;
+        }
+
+        .bot {
+            background: #f1f1f1;
+            color: black;
+            text-align: left;
+        }
+
+        #user-input {
+            width: 80%;
+            padding: 5px;
+        }
+    </style>
+    <title>Early Parkinson's Detection</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body class="is-preload homepage">
+    <div id="page-wrapper">
+
+        <!-- Header -->
+        <div id="header-wrapper">
+            <header id="header" class="container">
+                <!-- Logo -->
+                <div id="logo">
+                    <h1><a href="index.html">Parkinson’s Detection</a></h1>
+                    <span>Empowering Early Diagnosis</span>
+                </div>
+
+                <!-- Navigation -->
+    
+
+            </header>
+        </div>
+
+        <!-- Banner -->
+        <div id="banner-wrapper">
+            <div id="banner" class="box container">
+                <div class="row">
+                    <div class="col-7 col-12-medium">
+                        <h2>Early Detection Saves Lives.</h2>
+                        <p>Our AI-powered voice analysis helps detect early signs of Parkinson’s disease.</p>
+                    </div>
+                    <div class="col-5 col-12-medium">
+                        <ul>
+                            <li><a href="{{ url_for('index1') }}" class="button large icon solid fa-microphone">Voice Detection Test</a></li>
+                            <li><a href="{{ url_for('questionnaire') }}" class="button alt large">Symptoms-Based Test</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- Features -->
+<div id="features-wrapper">
+    <div class="container">
+        <div class="row">
+            <!-- About Parkinson's Disease -->
+            <div class="col-6 col-12-medium">
+                <section class="box feature text-center">
+                    <a href="#" class="image featured">
+                        <img src="{{ url_for('static', filename='img1.jfif') }}" alt="About Parkinson's Disease" />
+                    </a>
+                    <div class="inner">
+                        <header>
+                            <h2>About Parkinson’s Disease</h2>
+                            <p>Learn about symptoms, causes, and treatments.</p>
+                        </header>
+                        <a href="{{ url_for('parkinsonsinfo') }}" class="custom-button">Learn More</a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Top Parkinson's Hospitals Near You -->
+            <div class="col-6 col-12-medium">
+                <section class="box feature text-center">
+                    <a href="{{ url_for('hospitals') }}" class="image featured">
+                        <img src="{{ url_for('static', filename='img2.jpg') }}" alt="Top Parkinson's Hospitals" />
+                    </a>
+                    <div class="inner">
+                        <header>
+                            <h2>Top Parkinson's Hospitals Near You</h2>
+                            <p>Explore leading hospitals specializing in Parkinson’s treatment.</p>
+                        </header>
+                        <a href="{{ url_for('hospitals') }}" class="custom-button">Find Hospitals</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Button Styling -->
+<style>
+    .custom-button {
+        background-color: #FF4E8B;
+        color: white;
+        padding: 12px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        transition: 0.3s;
+        border: none;
+    }
+
+    .custom-button:hover {
+        background-color: #d93b72;
+    }
+
+    /* Ensure images fit nicely */
+    .image.featured img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+</style>
+
+
+
+
+
+       
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+<!-- Chatbot Section -->
+<div id="chat-icon" onclick="toggleChat()">💬</div>
+<div id="chat-box">
+    <div id="chat-messages"></div>
+    <input type="text" id="user-input" placeholder="Ask about Parkinson’s...">
+    <button onclick="sendMessage()">Send</button>
+</div>
+</body>
+</html>

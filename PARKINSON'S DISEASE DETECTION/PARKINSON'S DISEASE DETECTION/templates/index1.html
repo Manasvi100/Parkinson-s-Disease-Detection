@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parkinson's Disease Prediction</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #1E95C9;
+      --grey: #606060;
+      --pink: #FF4E8B;
+      --white: #ffffff;
+      --glow: rgba(255, 78, 139, 0.6);
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      background: url("{{ url_for('static', filename='img.png') }}") no-repeat center/cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 0;
+      color: var(--grey);
+    }
+
+    h2 {
+      color: var(--blue);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+    }
+
+    .flip-container {
+      width: 95%;
+      max-width: 500px;
+      height: 400px;
+      position: relative;
+      perspective: 1200px;
+    }
+
+    .flipper {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transition: transform 0.6s ease-in-out;
+      transform-style: preserve-3d;
+    }
+
+    .flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-face {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      padding: 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      background: var(--white);
+      box-shadow: 0 0 40px 15px var(--glow);
+    }
+
+    .flip-card-back {
+      transform: rotateY(180deg);
+    }
+
+    .upload-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .upload-section label {
+      color: var(--white);
+      background: var(--blue);
+      padding: 12px 22px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.3s ease-in-out;
+    }
+
+    .upload-section label:hover {
+      background: #28a745;
+    }
+
+    .upload-section input {
+      display: none;
+    }
+
+    #file-name {
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--grey);
+    }
+
+    .btn {
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      padding: 12px 26px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 6px;
+      margin-top: 20px;
+      transition: background 0.3s, transform 0.2s;
+      text-transform: uppercase;
+    }
+
+    .btn:hover {
+      background: #28a745;
+      transform: scale(1.05);
+    }
+
+    #result {
+      font-size: 18px;
+      font-weight: 600;
+      padding: 20px;
+      border-radius: 8px;
+      background: rgba(255, 78, 139, 0.1);
+      color: var(--blue);
+      text-align: center;
+      display: none;
+      width: 100%;
+      max-width: 90%;
+    }
+
+    .warning {
+      font-size: 13px;
+      color: var(--pink);
+      margin-top: 10px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+<div class="flip-container">
+  <div class="flipper" id="flipContainer">
+    <div class="flip-card-face flip-card-front">
+      <h2>AI-Based Parkinson's Prediction</h2>
+      <form id="predictForm" enctype="multipart/form-data" action="/predict" method="post">
+        <div class="upload-section">
+          <label for="voiceUpload">Upload Voice</label>
+          <input type="file" id="voiceUpload" name="file" accept="audio/*" required>
+          <p id="file-name">No file chosen</p>
+        </div>
+        <button type="submit" class="btn">Predict</button>
+      </form>
+      <p class="warning">⚠ This AI model is not 100% accurate. Consult a doctor for confirmation.</p>
+    </div>
+
+    <div class="flip-card-face flip-card-back" id="backPanel">
+      <div id="result"></div>
+      <button id="backBtn" class="btn">Back</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("voiceUpload").addEventListener("change", function() {
+    let fileName = this.files[0] ? this.files[0].name : "No file chosen";
+    document.getElementById("file-name").textContent = fileName;
+  });
+
+  document.getElementById("predictForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    let formData = new FormData(this);
+    
+    fetch("/predict", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      let resultElement = document.getElementById("result");
+
+      if (data.error) {
+        resultElement.innerHTML = `<h3>Error</h3><p>${data.error}</p>`;
+      } else {
+        let confidence = parseFloat(data.confidence);
+        let status, glowColor;
+        
+        if (confidence <= 0.45) {
+          status = "Healthy";
+          glowColor = "rgba(0, 255, 0, 0.6)"; // Green glow
+        } else if (confidence > 0.55) {
+          status = "Parkinson’s Detected";
+          glowColor = "rgba(255, 0, 0, 0.6)"; // Red glow
+        } else {
+          status = "Borderline";
+          glowColor = "rgba(255, 165, 0, 0.6)"; // Orange glow
+        }
+
+        resultElement.innerHTML = `
+          <div>
+            <h3 style="margin-bottom: 10px; text-transform: uppercase; color: #1E95C9;">Prediction Result</h3>
+            <p style="font-size: 18px; color: #333;">Status: <strong>${status}</strong></p>
+            <p style="font-size: 18px; color: #333;">Risk Score: <strong>${(confidence * 100).toFixed(2)}%</strong></p>
+            <p style="font-size: 14px; color: #4A4A4A;">0-45% → Healthy | 45-55% → Borderline | 55-100% → Parkinson’s detected</p>
+          </div>
+        `;
+
+        document.getElementById("backPanel").style.boxShadow = `0 0 40px 15px ${glowColor}`;
+        resultElement.style.display = "block";
+        document.getElementById("flipContainer").classList.add("flipped");
+      }
+    })
+    .catch(error => {
+      document.getElementById("result").innerHTML = `<h3>Error</h3><p>Something went wrong.</p>`;
+    });
+  });
+
+  document.getElementById("backBtn").addEventListener("click", function() {
+    document.getElementById("flipContainer").classList.remove("flipped");
+    document.getElementById("backPanel").style.boxShadow = "0 0 40px 15px var(--glow)";
+    document.getElementById("result").style.display = "none";
+  });
+</script>
+
+</body>
+</html>
