@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkinson's Disease Questionnaire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f0fe;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 70%;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+            text-align: left;
+        }
+        h1 {
+            text-align: center;
+        }
+        h2 {
+            color: #0056b3;
+            margin-top: 20px;
+        }
+        hr {
+            border: 0;
+            height: 2px;
+            background: #ccc;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-weight: bold;
+            margin: 15px 0 5px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 20px;
+        }
+        button {
+            background: #0056b3;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 30px;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background: #00408a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Parkinson's Disease Questionnaire</h1>
+        
+        <hr>
+        
+        <script>
+            const questions = [
+                { section: "Section 1: Mental & Emotional Health", text: "Do you often feel sad, hopeless, or depressed?", name: "q1" },
+                { text: "Do you experience sudden urges or compulsive behaviors (e.g., excessive gambling, shopping, or binge eating)?", name: "q2" },
+                { text: "How often do you feel excessively anxious or worried?", name: "q3" },
+                
+                { section: "Section 2: Sleep & Autonomic Functions", text: "Do you experience dizziness or fainting upon standing up?", name: "q4" },
+                { text: "Do you feel excessively sleepy during the day, even after a full night’s sleep?", name: "q5" },
+                { text: "Has anyone observed you acting out dreams while sleeping (e.g., sudden movements, shouting, or falling out of bed)?", name: "q6" },
+                
+                { section: "Section 3: Sensory & Cognitive Abilities", text: "Have you noticed a decline in your ability to smell or identify odors?", name: "q7", options: ["No change", "Slightly reduced", "Moderately reduced", "Significantly reduced", "Completely lost"] },
+                { text: "Can you recall a sequence of letters and numbers easily after hearing them?", name: "q8" },
+                { text: "Do you find it harder to name objects or recall specific words during conversations?", name: "q9" },
+                { text: "How quickly can you match symbols to numbers in a pattern-based test?", name: "q10" },
+                { text: "Do you experience difficulties with concentration, memory, or multitasking?", name: "q11" },
+                { text: "How well can you recall a list of words immediately after hearing them?", name: "q12", options: ["Very well", "Moderately well", "Some difficulty", "Significant difficulty", "Cannot recall at all"] },
+                { text: "Do you find it difficult to judge the orientation of lines, angles, or spatial directions?", name: "q13" },
+                
+                { section: "Section 4: Additional Information", text: "Do you have a family history of Parkinson’s disease?", name: "q14", options: ["No", "Yes, in immediate family", "Yes, in extended family"] },
+            ];
+
+            let currentSection = "";
+            questions.forEach(q => {
+                if (q.section && q.section !== currentSection) {
+                    document.write(`<h2>${q.section}</h2><hr>`);
+                    currentSection = q.section;
+                }
+                document.write(`<div class='question'>${q.text}</div>`);
+                document.write("<div class='options'>");
+                (q.options || ["Never", "Rarely", "Sometimes", "Often", "Always"]).forEach(option => {
+                    document.write(`<label><input type='radio' name='${q.name}' value='${option}'> ${option}</label>`);
+                });
+                document.write("</div>");
+            });
+        </script>
+        
+        <button onclick="calculateRisk()">Submit</button>
+        
+        <h2 id="result"></h2>
+    </div>
+
+    <script>
+        function calculateRisk() {
+            let score = 0;
+            const answers = document.querySelectorAll("input[type='radio']:checked");
+            
+            answers.forEach(answer => {
+                if (answer.value === "Never" || answer.value === "No change" || answer.value === "No") {
+                    score += 0;
+                } else if (answer.value === "Rarely" || answer.value === "Slightly reduced") {
+                    score += 1;
+                } else if (answer.value === "Sometimes" || answer.value === "Moderately reduced") {
+                    score += 2;
+                } else if (answer.value === "Often" || answer.value === "Significantly reduced") {
+                    score += 3;
+                } else if (answer.value === "Always" || answer.value === "Completely lost") {
+                    score += 4;
+                }
+            });
+            
+            let probability = (score / (answers.length * 4)) * 100;
+            document.getElementById("result").innerText = `Estimated probability of Parkinson's: ${probability.toFixed(2)}%`;
+        }
+    </script>
+</body>
+</html>

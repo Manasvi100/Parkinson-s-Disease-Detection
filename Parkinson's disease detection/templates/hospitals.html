@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Top Parkinson's Hospitals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #F8F8F8;
+      text-align: center;
+      overflow-x: hidden;
+      color: #858384;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding-top: 20px;
+    }
+    header h1 {
+      font-size: 32px;
+      font-weight: 600;
+      color: #FF4B89;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 18px;
+      color: #858384;
+    }
+    select {
+      padding: 12px;
+      font-size: 18px;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 1px solid #1392C6;
+      background: #F8F8F8;
+      color: #1392C6;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+    select:hover {
+      border-color: #279364;
+    }
+    .hospital-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .hospital-card {
+      background: #F8F8F8;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(133, 131, 132, 0.2);
+      width: 350px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+      border: 1px solid #858384;
+    }
+    .hospital-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(133, 131, 132, 0.3);
+    }
+    .hospital-card h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: #1392C6;
+    }
+    .hospital-card a {
+      display: inline-block;
+      font-size: 16px;
+      font-weight: bold;
+      color: #FF4B89;
+      text-decoration: none;
+      border: 2px solid #FF4B89;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+    .hospital-card a:hover {
+      background: #279364;
+      color: #F8F8F8;
+    }
+    .hospital-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(45deg, #FF4B89, #279364);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .hospital-card:hover::after {
+      transform: scaleX(1);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Top Parkinson's Disease Hospitals</h1>
+    <p>Select a city to find the best hospitals</p>
+  </header>
+  <div class="container">
+    <select id="city-select">
+      <option value="Pune">Pune</option>
+      <option value="Mumbai">Mumbai</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Chennai">Chennai</option>
+      <option value="Hyderabad">Hyderabad</option>
+      <option value="Bangalore">Bangalore</option>
+    </select>
+    <div id="hospital-list" class="hospital-list">
+      <!-- Hospital data will be inserted dynamically -->
+    </div>
+  </div>
+  
+  <script>
+    const hospitals = {
+      "Pune": [
+        { name: "Ruby Hall Clinic", website: "https://www.rubyhall.com/" },
+        { name: "Deenanath Mangeshkar Hospital", website: "https://www.dmhospital.org/" },
+        { name: "Jupiter Hospital, Pune", website: "https://www.jupiterhospital.com/pune/" },
+        { name: "Sahyadri Hospitals", website: "https://www.sahyadrihospital.com/" },
+        { name: "Jehangir Hospital", website: "https://www.jehangirhospital.com/" }
+      ],
+      "Mumbai": [
+        { name: "Kokilaben Dhirubhai Ambani Hospital", website: "https://www.kokilabenhospital.com/" },
+        { name: "Lilavati Hospital", website: "https://www.lilavatihospital.com/" },
+        { name: "Tata Memorial Hospital", website: "https://tmc.gov.in/" },
+        { name: "Nanavati Super Speciality Hospital", website: "https://www.nanavatimaxhospital.org/" },
+        { name: "P.D. Hinduja Hospital", website: "https://www.hindujahospital.com/" }
+      ],
+      "Bangalore": [
+        { name: "Manipal Hospital", website: "https://www.manipalhospitals.com/bangalore/" },
+        { name: "Fortis Hospital", website: "https://www.fortishealthcare.com/location/fortis-hospital-bg-road-bangalore" },
+        { name: "Apollo Hospitals", website: "https://www.apollohospitals.com/hospital/bangalore" },
+        { name: "Aster Hospitals", website: "https://www.asterhospitals.in/hospitals/aster-cmi-bangalore" },
+        { name: "NIMHANS", website: "https://nimhans.ac.in/" }
+      ],
+      "Delhi": [
+        { name: "AIIMS", website: "https://www.aiims.edu/" },
+        { name: "Max Super Speciality Hospital", website: "https://www.maxhealthcare.in/" },
+        { name: "Apollo Hospital", website: "https://www.apollohospitals.com/delhi" },
+        { name: "Sir Ganga Ram Hospital", website: "https://sgrh.com/" }
+      ],
+      "Chennai": [
+        { name: "Apollo Hospitals, Greams Road", website: "https://www.apollohospitals.com/hospital/chennai" },
+        { name: "Kauvery Hospital", website: "https://www.kauveryhospital.com/" },
+        { name: "Gleneagles Hospital", website: "https://www.gleneagleshospitals.co.in/gleneagles-healthcity-perumbakkam-sholinganallur-chennai" },
+        { name: "Institute of Neurological Sciences, SIMS Hospital", website: "https://www.simshospitals.com/" }
+      ],
+      "Hyderabad": [
+        { name: "Apollo Health City", website: "https://www.apollohospitals.com/hospital/hyderabad" },
+        { name: "Care Hospitals", website: "https://www.carehospitals.com/" },
+        { name: "KIMS Hospitals", website: "https://www.kimshospitals.com/" },
+        { name: "Yashoda Hospitals", website: "https://www.yashodahospitals.com/" }
+      ]
+    };
+
+    function updateHospitals() {
+      const city = document.getElementById("city-select").value;
+      const hospitalList = document.getElementById("hospital-list");
+      hospitalList.innerHTML = "";
+
+      hospitals[city].forEach(hospital => {
+        const div = document.createElement("div");
+        div.classList.add("hospital-card");
+        div.innerHTML = `<h3>${hospital.name}</h3><a href="${hospital.website}" target="_blank">Visit Website</a>`;
+        hospitalList.appendChild(div);
+      });
+
+      gsap.to(".hospital-list", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" });
+    }
+
+    document.getElementById("city-select").addEventListener("change", updateHospitals);
+    updateHospitals();
+  </script>
+</body>
+</html>
